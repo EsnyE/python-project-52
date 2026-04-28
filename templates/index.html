@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block title %}Менеджер задач - Главная{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4 mb-4">Менеджер задач</h1>
+            <p class="lead text-muted mb-5">
+                Простой и удобный инструмент для управления задачами.
+                Создавайте, назначайте и отслеживайте выполнение задач в вашей команде.
+            </p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-4 me-sm-3">Вход</a>
+                <a href="{% url 'registration' %}" class="btn btn-outline-secondary btn-lg px-4">Регистрация</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-5 text-center">
+        <div class="col-md-4">
+            <h5>📋 Создание задач</h5>
+            <p class="text-muted">Создавайте задачи и назначайте исполнителей</p>
+        </div>
+        <div class="col-md-4">
+            <h5>🏷️ Статусы</h5>
+            <p class="text-muted">Отслеживайте прогресс выполнения</p>
+        </div>
+        <div class="col-md-4">
+            <h5>👥 Команда</h5>
+            <p class="text-muted">Работайте вместе над общими задачами</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

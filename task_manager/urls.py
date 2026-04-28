@@ -17,13 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponse
-
+from django.views.generic import TemplateView
 
 def index(request):
     return HttpResponse('Привет, мир! Это Task Manager!')
 
 
 urlpatterns = [
-    path('', index, name='index'),
+    path('', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('users/', TemplateView.as_view(template_name='users.html'), name='users'),
+    path('login/', TemplateView.as_view(template_name='login.html'), name='login'),
+    path('registration/', TemplateView.as_view(template_name='registration.html'), name='registration'),
     path('admin/', admin.site.urls),
 ]
