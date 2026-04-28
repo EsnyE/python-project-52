@@ -15,9 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.http import HttpResponse
 from django.views.generic import TemplateView
+from users.views import UserLoginView, UserLogoutView
+
 
 def index(request):
     return HttpResponse('Привет, мир! Это Task Manager!')
@@ -25,8 +27,8 @@ def index(request):
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
-    path('users/', TemplateView.as_view(template_name='users.html'), name='users'),
-    path('login/', TemplateView.as_view(template_name='login.html'), name='login'),
-    path('registration/', TemplateView.as_view(template_name='registration.html'), name='registration'),
+    path('users/', include('users.urls')),
+    path('login/', UserLoginView.as_view(), name='login'),
+    path('logout/', UserLogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
 ]
