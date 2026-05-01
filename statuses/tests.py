@@ -22,7 +22,7 @@ class TestStatus(TestCase):
 
     def test_status_index_page(self):
         self.client.force_login(user=self.user)
-        response = self.client.get(reverse("statuses:index"))
+        response = self.client.get(reverse("statuses:list"))
         self.assertEqual(response.status_code, 200)
 
     def test_create_status(self):
@@ -37,14 +37,14 @@ class TestStatus(TestCase):
             test_status_data
         )
 
-        self.assertRedirects(response, reverse("statuses:index"))
+        self.assertRedirects(response, reverse("statuses:list"))
         test_status = Status.objects.latest("id")
         self.assertEqual(test_status.name, test_status_data["name"])
         self.assertEqual(Status.objects.count(), status_count + 1)
 
     def test_read_status(self):
         self.client.force_login(user=self.user)
-        response = self.client.get(reverse("statuses:index"))
+        response = self.client.get(reverse("statuses:list"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.status_obj.name)
 
@@ -54,7 +54,7 @@ class TestStatus(TestCase):
             reverse("statuses:update", kwargs={"pk": self.status_obj.id}),
             self.status_data,
         )
-        self.assertRedirects(response, reverse("statuses:index"))
+        self.assertRedirects(response, reverse("statuses:list"))
 
         self.status_obj.refresh_from_db()
         self.assertEqual(self.status_obj.name, self.status_data["name"])
@@ -67,7 +67,7 @@ class TestStatus(TestCase):
         response = self.client.post(
             reverse("statuses:delete", kwargs={"pk": test_status.id})
         )
-        self.assertRedirects(response, reverse("statuses:index"))
+        self.assertRedirects(response, reverse("statuses:list"))
 
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
@@ -89,7 +89,7 @@ class TestStatus(TestCase):
             reverse("statuses:delete", kwargs={"pk": self.status_obj.id})
         )
 
-        self.assertRedirects(response, reverse("statuses:index"))
+        self.assertRedirects(response, reverse("statuses:list"))
         messages = list(get_messages(response.wsgi_request))
 
         self.assertEqual(len(messages), 1)

@@ -25,12 +25,12 @@ class TestLabels(TestCase):
             raise AssertionError("Не загрузилась фикстура labels.json")
 
     def test_labels_index_page_not_logged_in(self):
-        response = self.client.get(reverse_lazy("labels:index"))
+        response = self.client.get(reverse_lazy("labels:list"))
         self.assertRedirects(response, expected_url="/login/?next=/labels/")
 
     def test_labels_index_page_logged_in(self):
         self.client.force_login(self.user)
-        response = self.client.get(reverse_lazy("labels:index"))
+        response = self.client.get(reverse_lazy("labels:list"))
         self.assertEqual(response.status_code, 200)
 
     def test_create_label(self):
@@ -45,7 +45,7 @@ class TestLabels(TestCase):
 
         self.assertRedirects(
             response,
-            expected_url=reverse_lazy("labels:index")
+            expected_url=reverse_lazy("labels:list")
         )
         test_label = Label.objects.latest("id")
         self.assertEqual(test_label.name, test_label_data["name"])
@@ -107,6 +107,6 @@ class TestLabels(TestCase):
 
         self.assertRedirects(
             response,
-            expected_url=reverse_lazy("labels:index")
+            expected_url=reverse_lazy("labels:list")
         )
         self.assertEqual(Label.objects.count(), total_labels)

@@ -16,7 +16,7 @@ class TestUser(TestCase):
         }
 
     def test_users_page_status_200(self):
-        response = self.client.get(reverse("users:users"))
+        response = self.client.get(reverse("users:list"))
         self.assertEqual(response.status_code, 200)
 
     def test_create_user(self):
@@ -24,8 +24,8 @@ class TestUser(TestCase):
             "first_name": "test_name",
             "last_name": "testov",
             "username": "test_test",
-            "password1": "test123@q",   # NOSONAR
-            "password2": "test123@q",   # NOSONAR
+            "password1": "test123@q",
+            "password2": "test123@q",
         }
         total_users = User.objects.count()
 
@@ -37,22 +37,22 @@ class TestUser(TestCase):
         self.assertEqual(User.objects.count(), total_users + 1)
 
     def test_read_user(self):
-        response = self.client.get(reverse("users:users"))
+        response = self.client.get(reverse("users:list"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.user.username)
         self.assertContains(response, self.user.first_name)
         self.assertContains(response, self.user.last_name)
 
     def test_update_user(self):
-        self.user.set_password("OldPass123@")   # NOSONAR
+        self.user.set_password("OldPass123@")
         self.user.save()
 
         update_user = {
             "first_name": self.user.first_name,
             "last_name": self.user.last_name,
             "username": "pupa",
-            "password1": "NewPass123@",   # NOSONAR
-            "password2": "NewPass123@",   # NOSONAR
+            "password1": "NewPass123@",
+            "password2": "NewPass123@",
         }
 
         self.client.force_login(user=self.user)
@@ -60,7 +60,7 @@ class TestUser(TestCase):
             reverse("users:update", kwargs={"pk": self.user.id}),
             update_user,
         )
-        self.assertRedirects(response, reverse("users:users"))
+        self.assertRedirects(response, reverse("users:list"))
 
         self.user.refresh_from_db()
         self.assertEqual(self.user.username, "pupa")
@@ -68,7 +68,7 @@ class TestUser(TestCase):
     def test_delete_user(self):
         user = User.objects.create_user(
             username="todelete",
-            password="Pass123@"        # NOSONAR
+            password="Pass123@"
         )
         total_users = User.objects.count()
 
@@ -79,5 +79,5 @@ class TestUser(TestCase):
             )
         )
 
-        self.assertRedirects(response, reverse("users:users"))
+        self.assertRedirects(response, reverse("users:list"))
         self.assertEqual(User.objects.count(), total_users - 1)

@@ -24,11 +24,11 @@ class TestTask(TestCase):
 
     def test_task_page_login(self):
         self.client.force_login(user=self.user)
-        response = self.client.get(reverse_lazy("tasks:index"))
+        response = self.client.get(reverse_lazy("tasks:list"))
         self.assertEqual(response.status_code, 200)
 
     def test_task_page_logout(self):
-        response = self.client.get(reverse_lazy("tasks:index"))
+        response = self.client.get(reverse_lazy("tasks:list"))
         self.assertRedirects(response, "/login/?next=/tasks/")
 
     def test_create_task(self):
@@ -48,7 +48,7 @@ class TestTask(TestCase):
         )
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse_lazy("tasks:index"))
+        self.assertRedirects(response, reverse_lazy("tasks:list"))
 
         test_task = Task.objects.latest("id")
         self.assertEqual(test_task.name, test_task_data["name"])
@@ -71,7 +71,7 @@ class TestTask(TestCase):
             reverse_lazy("tasks:update", kwargs={"pk": self.task_obj.id}),
             update_task,
         )
-        self.assertRedirects(response, reverse_lazy("tasks:index"))
+        self.assertRedirects(response, reverse_lazy("tasks:list"))
 
         self.task_obj.refresh_from_db()
         self.assertEqual(self.task_obj.name, update_task["name"])
@@ -92,5 +92,5 @@ class TestTask(TestCase):
             reverse_lazy("tasks:delete", kwargs={"pk": task.id})
         )
 
-        self.assertRedirects(response, reverse_lazy("tasks:index"))
+        self.assertRedirects(response, reverse_lazy("tasks:list"))
         self.assertEqual(Task.objects.count(), tasks_count - 1)
