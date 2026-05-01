@@ -28,7 +28,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = 'tasks/create.html'
-    success_url = reverse_lazy('tasks:list')
+    success_url = reverse_lazy('tasks')
     
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -37,7 +37,9 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        messages.success(self.request, 'Задача успешно создана')
+        return response
 
 
 class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):

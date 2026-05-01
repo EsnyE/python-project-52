@@ -4,7 +4,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.db.models import ProtectedError
 from labels.models import Label
 from labels.forms import LabelForm
 
