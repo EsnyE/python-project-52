@@ -57,6 +57,9 @@ class UserLoginView(SuccessMessageMixin, LoginView):
     next_page = reverse_lazy('index')
     success_message = 'Вы залогинены'
 
+    def get_success_url(self):
+        return self.next_page
+
 
 class UserLogoutView(LogoutView):
     next_page = reverse_lazy('index')
