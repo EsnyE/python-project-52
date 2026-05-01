@@ -17,6 +17,8 @@ collectstatic:
 	uv run python manage.py collectstatic --noinput
 
 migrate:
+	migrate:
+	uv run python manage.py migrate tasks 0002_initial --fake
 	uv run python manage.py migrate
 
 lint:
