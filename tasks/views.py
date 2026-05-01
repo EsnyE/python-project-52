@@ -2,6 +2,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import redirect
 from tasks.models import Task
@@ -28,6 +29,12 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'tasks/create.html'
     success_url = reverse_lazy('tasks')
     success_message = 'Задача успешно создана'
+
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['executor'].queryset = User.objects.all()
+        return form
 
     def form_valid(self, form):
         form.instance.author = self.request.user
