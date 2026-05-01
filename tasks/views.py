@@ -30,9 +30,9 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        response = super().form_valid(form)
+        self.object = form.save()
         messages.success(self.request, 'Задача успешно создана')
-        return response
+        return redirect(self.get_success_url())
 
 
 class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
