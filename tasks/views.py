@@ -35,7 +35,7 @@ _TASK_LIST_COLUMNS = {
 }
 
 _ROUTES = {
-    "tasks_index": "tasks:index",
+    "tasks_index": "tasks:list",
     "tasks:list": "tasks:list",
 }
 
