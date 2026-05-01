@@ -18,19 +18,6 @@ import dj_database_url
 
 load_dotenv()
 
-ROLLBAR_ACCESS_TOKEN = os.getenv('ROLLBAR_ACCESS_TOKEN')
-
-if ROLLBAR_ACCESS_TOKEN:
-    MIDDLEWARE += [
-        'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
-    ]
-
-    ROLLBAR = {
-        'access_token': ROLLBAR_ACCESS_TOKEN,
-        'environment': 'development' if DEBUG else 'production',
-        'code_version': '1.0',
-        'root': BASE_DIR,
-    }
     
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret-key')
+SECRET_KEY = os.getenv('SECRET_KEY', 'dev-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
@@ -76,6 +63,22 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+ROLLBAR_ACCESS_TOKEN = os.getenv('ROLLBAR_ACCESS_TOKEN')
+
+if ROLLBAR_ACCESS_TOKEN:
+    MIDDLEWARE += [
+        'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
+    ]
+
+    ROLLBAR = {
+        'access_token': ROLLBAR_ACCESS_TOKEN,
+        'environment': 'development' if DEBUG else 'production',
+        'code_version': '1.0',
+        'root': BASE_DIR,
+    }
+
+
 ROOT_URLCONF = 'task_manager.urls'
 
 TEMPLATES = [
@@ -103,9 +106,8 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///db.sqlite3')
 DATABASES = {
     'default': dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,
-        conn_health_checks=True,
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600
     )
 }
 
