@@ -1,9 +1,17 @@
 from django.urls import path
-from labels import views
+
+from labels.views import (
+    CreateLabelView,
+    DeleteLabelView,
+    IndexLabelView,
+    UpdateLabelView,
+)
+
+app_name = "labels"
 
 urlpatterns = [
-    path('', views.LabelsListView.as_view(), name='labels'),
-    path('create/', views.LabelCreateView.as_view(), name='label_create'),
-    path('<int:pk>/update/', views.LabelUpdateView.as_view(), name='label_update'),
-    path('<int:pk>/delete/', views.LabelDeleteView.as_view(), name='label_delete'),
+    path("", IndexLabelView.as_view(), name="index"),
+    path("create/", CreateLabelView.as_view(), name="create"),
+    path("<int:pk>/update/", UpdateLabelView.as_view(), name="update"),
+    path("<int:pk>/delete/", DeleteLabelView.as_view(), name="delete"),
 ]

@@ -1,4 +1,5 @@
 import os
+
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
@@ -18,11 +19,11 @@ _MSG_LOGGED_OUT = "Вы разлогинены"
 
 
 class IndexView(TemplateView):
-    template_name = _TEMPLATE_INDEX
+    template_name = os.path.join(_TEMPLATE_INDEX)
 
 
 class LoginUser(LoginView):
-    template_name = _TEMPLATE_LOGIN
+    template_name = os.path.join(_TEMPLATE_LOGIN)
     reverse_page = reverse_lazy(_HOME_PAGE)
     extra_context = {
         "title": _TITLE_LOGIN,
@@ -35,7 +36,7 @@ class LoginUser(LoginView):
 
 
 class LogoutUser(LogoutView):
-    template_name = _TEMPLATE_LOGOUT
+    template_name = os.path.join(_TEMPLATE_LOGOUT)
     reverse_page = reverse_lazy(_HOME_PAGE)
 
     def dispatch(self, request, *args, **kwargs):

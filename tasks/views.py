@@ -1,66 +1,113 @@
-from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+import os
+
+from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib import messages
-from django.shortcuts import redirect
-from tasks.models import Task
+from django.urls import reverse_lazy as reverse
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
+from django_filters.views import FilterView
+
+from tasks.filter import TaskFilter
 from tasks.forms import TaskForm
-from tasks.filters import TaskFilter
-from django.contrib.auth import get_user_model
+from tasks.mixins import AuthorRequireMixin
+from tasks.models import Task
+from users.models import User
+
+_UI_ACTIONS = {
+    "edit": "Изменить",
+    "delete": "Удалить",
+}
+
+_TASK_LIST_COLUMNS = {
+    "ID": "ID",
+    "name": "Имя",
+    "status": "Статус",
+    "author": "Автор",
+    "executor": "Исполнитель",
+    "select": "Выбрать",
+    "created_at": "Дата создания",
+}
+
+_ROUTES = {
+    "tasks_index": "tasks:index",
+}
 
 
-class TasksListView(LoginRequiredMixin, ListView):
+class TaskIndexView(LoginRequiredMixin, FilterView, ListView):
     model = Task
-    template_name = 'tasks/index.html'
-    context_object_name = 'tasks'
     filterset_class = TaskFilter
+    template_name = os.path.join("tasks", "index.html")
+    context_object_name = "tasks"
+    extra_context = {
+        "title": "Задачи",
+        **_TASK_LIST_COLUMNS,
+        **_UI_ACTIONS,
+    }
+    permission_denied_message = settings.LOGIN_REQUIRED_MESSAGE
 
-class TaskDetailView(LoginRequiredMixin, DetailView):
-    model = Task
-    template_name = 'tasks/detail.html'
-    context_object_name = 'task'
 
-
-User = get_user_model()
-
-class TaskCreateView(LoginRequiredMixin, CreateView):
-    model = Task
+class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = TaskForm
-    template_name = 'tasks/create.html'
-    success_url = reverse_lazy('tasks')
-    
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        form.fields['executor'].queryset = User.objects.all()
-        return form
-    
+    template_name = os.path.join("tasks", "create.html")
+    success_url = reverse(_ROUTES["tasks_index"])
+    extra_context = {
+        "title": "Создать задачу",
+        "submit": "Создать",
+    }
+    success_message = "Задача успешно создана"
+    permission_denied_message = settings.LOGIN_REQUIRED_MESSAGE
+
     def form_valid(self, form):
-        form.instance.author = self.request.user
-        response = super().form_valid(form)
-        messages.success(self.request, 'Задача успешно создана')
-        return response
+        user = self.request.user
+        form.instance.author = User.objects.get(pk=user.pk)
+        return super().form_valid(form)
 
 
 class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Task
     form_class = TaskForm
-    template_name = 'tasks/update.html'
-    success_url = reverse_lazy('tasks')
-    success_message = 'Задача успешно изменена'
-    login_url = reverse_lazy('login')
+    template_name = os.path.join("tasks", "create.html")
+    success_url = reverse(_ROUTES["tasks_index"])
+    extra_context = {
+        "title": "Изменение задачи",
+        "submit": _UI_ACTIONS["edit"],
+    }
+    success_message = "Задача успешно изменена"
+    permission_denied_message = settings.LOGIN_REQUIRED_MESSAGE
 
 
-class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+class TaskDeleteView(
+    LoginRequiredMixin, AuthorRequireMixin, SuccessMessageMixin, DeleteView
+):
     model = Task
-    template_name = 'tasks/delete.html'
-    success_url = reverse_lazy('tasks')
-    success_message = 'Задача успешно удалена'
+    template_name = os.path.join("tasks", "delete.html")
+    context_object_name = "task"
+    success_url = reverse(_ROUTES["tasks_index"])
+    extra_context = {
+        "title": "Удаление задачи",
+        "submit": "Да, удалить",
+        "confirm": "Вы уверены, что хотите удалить",
+    }
+    permission_denied_message = settings.LOGIN_REQUIRED_MESSAGE
+    success_message = "Задача успешно удалена"
 
-    def test_func(self):
-        task = self.get_object()
-        return task.author == self.request.user
 
-    def handle_no_permission(self):
-        messages.error(self.request, 'Задачу может удалить только ее автор')
-        return redirect('tasks')
+class TaskDetail(LoginRequiredMixin, DetailView):
+    model = Task
+    template_name = os.path.join("tasks", "detail.html")
+    extra_context = {
+        "title": "Просмотр задачи",
+        "author": "Автор",
+        "executor": "Исполнитель",
+        "status": "Статус",
+        "created": "Дата создания",
+        "labels": "Метки",
+        **_UI_ACTIONS,
+    }
+    permission_denied_message = settings.LOGIN_REQUIRED_MESSAGE

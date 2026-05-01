@@ -1,11 +1,18 @@
 from django import forms
-from statuses.models import Status
+
+from .models import Status
 
 
 class StatusForm(forms.ModelForm):
     class Meta:
         model = Status
-        fields = ['name']
-        labels = {
-            'name': 'Имя',
+        fields = ("name",)
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Имя",
+                }
+            ),
         }
+        labels = {"name": "Имя"}
