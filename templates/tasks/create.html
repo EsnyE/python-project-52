@@ -31,7 +31,7 @@
             <select name="executor" id="id_executor" class="form-select">
                 <option value="">---------</option>
                 {% for user in form.fields.executor.queryset %}
-                    <option value="{{ user.pk }}">{{ user.username }}</option>
+                    <option value="{{ user.pk }}">{{ user.get_full_name }}</option>
                 {% endfor %}
             </select>
         </div>
