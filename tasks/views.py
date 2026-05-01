@@ -8,6 +8,7 @@ from django.shortcuts import redirect
 from tasks.models import Task
 from tasks.forms import TaskForm
 from tasks.filters import TaskFilter
+from django.contrib.auth import get_user_model
 
 
 
@@ -23,19 +24,19 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'task'
 
 
-class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+User = get_user_model()
+
+class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
-    template_name = 'tasks/create.html'
-    success_url = reverse_lazy('tasks')
-    success_message = 'Задача успешно создана'
-
-
+    template_name = 'tasks/task_form.html'
+    success_url = reverse_lazy('tasks:list')
+    
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         form.fields['executor'].queryset = User.objects.all()
         return form
-
+    
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
