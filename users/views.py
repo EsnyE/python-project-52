@@ -19,7 +19,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     model = User
     form_class = CustomUserCreationForm
     template_name = 'users/create.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('users')
     success_message = 'Пользователь успешно зарегистрирован'
 
     def form_invalid(self, form):
