@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mt-4">
     <h1>Метки</h1>
-    <a href="{% url 'labels:label_create' %}" class="btn btn-primary mb-3">Создать метку</a>
+    <a href="{% url 'label_create' %}" class="btn btn-primary mb-3">Создать метку</a>
     <table class="table table-hover table-bordered">
         <thead class="table-dark">
             <tr>
@@ -20,8 +20,8 @@
                     <td>{{ label.name }}</td>
                     <td>{{ label.created_at|date:"d.m.Y H:i" }}</td>
                     <td>
-                        <a href="{% url 'labels:label_update' label.pk %}" class="btn btn-sm btn-primary">Изменить</a>
-                        <a href="{% url 'labels:label_delete' label.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+                        <a href="{% url 'label_update' label.pk %}" class="btn btn-sm btn-primary">Изменить</a>
+                        <a href="{% url 'label_delete' label.pk %}" class="btn btn-sm btn-danger">Удалить</a>
                     </td>
                 </tr>
             {% endfor %}

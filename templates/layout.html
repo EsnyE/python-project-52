@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'users:users' %}">Пользователи</a>
+                            <a class="nav-link" href="{% url 'users' %}">Пользователи</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'statuses' %}">Статусы</a>
@@ -32,6 +32,9 @@
                     <ul class="navbar-nav">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
+                                <span class="navbar-text me-3">{{ user.username }}</span>
+                            </li>
+                            <li class="nav-item">
                                 <form action="{% url 'logout' %}" method="post">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-outline-light btn-sm">Выход</button>
@@ -42,7 +45,7 @@
                                 <a class="nav-link" href="{% url 'login' %}">Вход</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'users:create' %}">Регистрация</a>
+                                <a class="nav-link" href="{% url 'user_create' %}">Регистрация</a>
                             </li>
                         {% endif %}
                     </ul>

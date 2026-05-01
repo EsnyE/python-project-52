@@ -7,8 +7,11 @@
             <h1 class="display-4 mb-4">Менеджер задач</h1>
             <p class="lead text-muted mb-5">
                 Простой и удобный инструмент для управления задачами.
-                Создавайте, назначайте и отслеживайте выполнение задач в вашей команде.
             </p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-4 me-sm-3">Вход</a>
+                <a href="{% url 'user_create' %}" class="btn btn-outline-secondary btn-lg px-4">Регистрация</a>
+            </div>
         </div>
     </div>
 </div>
