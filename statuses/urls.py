@@ -1,6 +1,9 @@
 from django.urls import path
 from statuses import views
 
+
+app_name = 'statuses'
+
 urlpatterns = [
     path('', views.StatusesListView.as_view(), name='statuses'),
     path('create/', views.StatusCreateView.as_view(), name='status_create'),
