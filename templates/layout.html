@@ -32,7 +32,7 @@
                     <ul class="navbar-nav">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <span class="navbar-text me-3">{{ user.username }}</span>
+                                <span class="navbar-text me-3">{{ user.get_full_name }}</span>
                             </li>
                             <li class="nav-item">
                                 <form action="{% url 'logout' %}" method="post">
@@ -45,7 +45,7 @@
                                 <a class="nav-link" href="{% url 'login' %}">Вход</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'users' %}">Регистрация</a>
+                                <a class="nav-link" href="{% url 'create' %}">Регистрация</a>
                             </li>
                         {% endif %}
                     </ul>
