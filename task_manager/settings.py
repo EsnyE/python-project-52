@@ -18,6 +18,20 @@ import dj_database_url
 
 load_dotenv()
 
+ROLLBAR_ACCESS_TOKEN = os.getenv('ROLLBAR_ACCESS_TOKEN')
+
+if ROLLBAR_ACCESS_TOKEN:
+    MIDDLEWARE += [
+        'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
+    ]
+
+    ROLLBAR = {
+        'access_token': ROLLBAR_ACCESS_TOKEN,
+        'environment': 'development' if DEBUG else 'production',
+        'code_version': '1.0',
+        'root': BASE_DIR,
+    }
+    
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
