@@ -6,13 +6,16 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from tasks.models import Task
 from tasks.forms import TaskForm
+from django_filters.views import FilterView
+from tasks.filters import TaskFilter
+
 
 
 class TasksListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'tasks/index.html'
     context_object_name = 'tasks'
-
+    filterset_class = TaskFilter
 
 class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
