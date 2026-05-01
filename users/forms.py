@@ -9,9 +9,8 @@ class UserCreateForm(UserCreationForm):
 
         self.fields["password1"].label = "Пароль"
         self.fields["password2"].label = "Подтверждение пароля"
-
         self.fields["password1"].help_text = ""
-        self.fields["password2"].help_text = ( 
+        self.fields["password2"].help_text = (
             "Для подтверждения, введите, пожалуйста, тот же пароль ещё раз."
         )
 
@@ -28,7 +27,7 @@ class UserCreateForm(UserCreationForm):
             "first_name": "Имя",
             "last_name": "Фамилия",
             "username": "Имя пользователя",
-            "password1": "Пароль",                
+            "password1": "Пароль",
             "password2": "Подтверждение пароля",
         }
         help_texts = {
