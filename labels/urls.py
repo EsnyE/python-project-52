@@ -10,7 +10,7 @@ from labels.views import (
 app_name = "labels"
 
 urlpatterns = [
-    path("", IndexLabelView.as_view(), name="index"),
+    path("", IndexLabelView.as_view(), name="list"),
     path("create/", CreateLabelView.as_view(), name="create"),
     path("<int:pk>/update/", UpdateLabelView.as_view(), name="update"),
     path("<int:pk>/delete/", DeleteLabelView.as_view(), name="delete"),
