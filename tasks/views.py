@@ -40,7 +40,7 @@ class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = TaskForm
     template_name = 'tasks/update.html'
     success_url = reverse_lazy('tasks')
-    success_message = 'Задача успешно изменен'
+    success_message = 'Задача успешно изменена'
 
 
 class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
