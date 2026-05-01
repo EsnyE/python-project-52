@@ -22,6 +22,11 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('login')
     success_message = 'Пользователь успешно зарегистрирован'
 
+    def form_invalid(self, form):
+        print("=== FORM ERRORS ===")
+        print(form.errors)
+        return super().form_invalid(form)
+    
 
 class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = User
