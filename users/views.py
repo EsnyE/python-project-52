@@ -7,7 +7,6 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from users.models import User
 from users.forms import CustomUserCreationForm, CustomUserChangeForm
-from django.contrib.auth.forms import UserChangeForm
 
 
 class UsersListView(ListView):
