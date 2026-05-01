@@ -23,11 +23,11 @@ _CONFIRM_DELETE = "Вы уверены, что хотите удалить"
 _SUBMIT_DELETE = "Да, удалить"
 
 _TEMPLATE_USERS_INDEX = os.path.join("users", "index.html")
-_TEMPLATE_USER_FORM = "login.html"
+_TEMPLATE_USER_FORM = os.path.join("users", "create.html")
 _TEMPLATE_USER_DELETE = os.path.join("users", "delete.html")
 
 _ROUTE_LOGIN = "login"
-_ROUTE_USERS_LIST = "users:users"
+_ROUTE_USERS_LIST = "users:list"
 
 _TITLE_REGISTER = "Регистрация"
 _TITLE_UPDATE = "Изменение пользователя"
