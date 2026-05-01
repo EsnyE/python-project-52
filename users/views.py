@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.shortcuts import redirect
 from users.models import User
-from users.forms import CustomUserCreationForm, CustomUserChangeForm
+from users.forms import CustomUserCreationForm, UserChangeForm
 
 
 class UsersListView(ListView):
@@ -30,7 +30,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
 
 class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = User
-    form_class = CustomUserChangeForm
+    form_class = UserChangeForm
     template_name = 'users/update.html'
     success_url = reverse_lazy('users')
     success_message = 'Пользователь успешно изменен'
