@@ -22,10 +22,10 @@ from users.views import UserLoginView, UserLogoutView
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
-    path('users/', include('users.urls', namespace='users')),
-    path('statuses/', include('statuses.urls', namespace='statuses')),
-    path('tasks/', include('tasks.urls', namespace='tasks')),
-    path('labels/', include('labels.urls', namespace='labels')),
+    path('users/', include('users.urls')),
+    path('statuses/', include('statuses.urls')),
+    path('tasks/', include('tasks.urls')),
+    path('labels/', include('labels.urls')),
     path('login/', UserLoginView.as_view(), name='login'),
     path('logout/', UserLogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
