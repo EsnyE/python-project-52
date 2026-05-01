@@ -6,11 +6,15 @@ from users.models import User
 class CustomUserCreationForm(UserCreationForm):
     password1 = forms.CharField(
         label='Пароль',
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        help_text='',
     )
     password2 = forms.CharField(
         label='Подтверждение пароля',
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        strip=False,
+        help_text='',
     )
 
     class Meta:
@@ -20,11 +24,6 @@ class CustomUserCreationForm(UserCreationForm):
             'first_name': 'Имя',
             'last_name': 'Фамилия',
             'username': 'Имя пользователя',
-        }
-        widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
 
@@ -38,9 +37,4 @@ class CustomUserChangeForm(UserChangeForm):
             'first_name': 'Имя',
             'last_name': 'Фамилия',
             'username': 'Имя пользователя',
-        }
-        widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
         }

@@ -5,10 +5,7 @@
     <h1>Изменение метки</h1>
     <form method="post">
         {% csrf_token %}
-        <div class="mb-3">
-            <label for="id_name" class="form-label">Имя</label>
-            <input type="text" name="name" value="{{ form.name.value|default:'' }}" class="form-control" id="id_name" required>
-        </div>
+        {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Изменить</button>
     </form>
 </div>

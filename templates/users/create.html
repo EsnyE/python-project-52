@@ -1,32 +1,11 @@
 {% extends 'layout.html' %}
 
-{% block title %}Регистрация{% endblock %}
-
 {% block content %}
 <div class="container mt-4">
     <h1>Регистрация</h1>
     <form method="post">
         {% csrf_token %}
-        <div class="mb-3">
-            <label for="id_first_name" class="form-label">Имя</label>
-            {{ form.first_name }}
-        </div>
-        <div class="mb-3">
-            <label for="id_last_name" class="form-label">Фамилия</label>
-            {{ form.last_name }}
-        </div>
-        <div class="mb-3">
-            <label for="id_username" class="form-label">Имя пользователя</label>
-            {{ form.username }}
-        </div>
-        <div class="mb-3">
-            <label for="id_password1" class="form-label">Пароль</label>
-            {{ form.password1 }}
-        </div>
-        <div class="mb-3">
-            <label for="id_password2" class="form-label">Подтверждение пароля</label>
-            {{ form.password2 }}
-        </div>
+        {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Зарегистрировать</button>
     </form>
 </div>
