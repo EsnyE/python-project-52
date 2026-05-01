@@ -29,7 +29,7 @@ User = get_user_model()
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
-    template_name = 'tasks/task_form.html'
+    template_name = 'tasks/create.html'
     success_url = reverse_lazy('tasks:list')
     
     def get_form(self, form_class=None):
