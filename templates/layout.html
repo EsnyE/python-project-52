@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Менеджер задач{% endblock %}</title>
-    {% django_bootstrap5_css %}
+    {% bootstrap5_css %}
 </head>
 <body class="bg-light">
     <header>
@@ -30,38 +30,52 @@
                             <a class="nav-link" href="{% url 'labels' %}">Метки</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <span class="navbar-text me-3">{{ user.username }}</span>
+                            </li>
+                            <li class="nav-item">
+                                <form action="{% url 'logout' %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-light btn-sm">Выход</button>
+                                </form>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Вход</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'user_create' %}">Регистрация</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-<ul class="navbar-nav">
-    {% if user.is_authenticated %}
-        <li class="nav-item">
-            <span class="navbar-text me-3">{{ user.username }}</span>
-        </li>
-        <li class="nav-item">
-            <form action="{% url 'logout' %}" method="post" class="d-inline">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-light btn-sm">Выход</button>
-            </form>
-        </li>
-    {% else %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Вход</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'user_create' %}">Регистрация</a>
-        </li>
-    {% endif %}
-</ul>
-        {% endwith %}
+    <main>
+        {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
         {% block content %}{% endblock %}
     </main>
 
     <footer class="footer mt-auto py-3 bg-light border-top">
-        <div class="container text-center text-muted">
+        <div class="container text-center">
             <p class="mb-0">© 2026 Менеджер задач</p>
         </div>
     </footer>
 
-    {% django_bootstrap5_javascript %}
+    {% bootstrap5_javascript %}
 </body>
 </html>
