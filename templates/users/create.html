@@ -5,7 +5,26 @@
     <h1>Регистрация</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="mb-3">
+            <label for="id_first_name" class="form-label">Имя</label>
+            <input type="text" name="first_name" class="form-control" id="id_first_name" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_last_name" class="form-label">Фамилия</label>
+            <input type="text" name="last_name" class="form-control" id="id_last_name" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Имя пользователя</label>
+            <input type="text" name="username" class="form-control" id="id_username" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_password1" class="form-label">Пароль</label>
+            <input type="password" name="password1" class="form-control" id="id_password1" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_password2" class="form-label">Подтверждение пароля</label>
+            <input type="password" name="password2" class="form-control" id="id_password2" required>
+        </div>
         <button type="submit" class="btn btn-primary">Зарегистрировать</button>
     </form>
 </div>
