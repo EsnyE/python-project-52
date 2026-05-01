@@ -2,6 +2,8 @@ from django.urls import path
 from labels import views
 
 
+app_name = 'labels'
+
 urlpatterns = [
     path('', views.LabelsListView.as_view(), name='labels'),
     path('create/', views.LabelCreateView.as_view(), name='label_create'),
