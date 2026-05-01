@@ -6,7 +6,7 @@ from django.urls import reverse_lazy as reverse
 
 class AuthorRequireMixin(UserPassesTestMixin):
     author_require_message = "Задачу может удалить только ее автор"
-    redirect_url = reverse("tasks:index")
+    redirect_url = reverse("tasks:list")
 
     def test_func(self):
         return self.get_object().author.id == self.request.user.id

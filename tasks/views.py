@@ -55,7 +55,7 @@ class TaskIndexView(LoginRequiredMixin, FilterView, ListView):
 class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = TaskForm
     template_name = os.path.join("tasks", "create.html")
-    success_url = reverse(_ROUTES["tasks_index"])
+    success_url = reverse(_ROUTES["tasks:list"])
     extra_context = {
         "title": "Создать задачу",
         "submit": "Создать",
@@ -73,7 +73,7 @@ class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = os.path.join("tasks", "create.html")
-    success_url = reverse(_ROUTES["tasks_index"])
+    success_url = reverse(_ROUTES["tasks:list"])
     extra_context = {
         "title": "Изменение задачи",
         "submit": _UI_ACTIONS["edit"],
@@ -88,7 +88,7 @@ class TaskDeleteView(
     model = Task
     template_name = os.path.join("tasks", "delete.html")
     context_object_name = "task"
-    success_url = reverse(_ROUTES["tasks_index"])
+    success_url = reverse(_ROUTES["tasks:list"])
     extra_context = {
         "title": "Удаление задачи",
         "submit": "Да, удалить",
