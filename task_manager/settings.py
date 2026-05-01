@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "tasks.apps.TasksConfig",
     "statuses.apps.StatusesConfig",
-    "bootstrap4",
+    "django_bootstrap5",
 ]
 
 MIDDLEWARE = [
