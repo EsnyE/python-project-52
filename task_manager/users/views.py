@@ -32,7 +32,7 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
     model = User
     form_class = CustomUserChangeForm
     template_name = 'users/update.html'
-    success_url = reverse_lazy('users')
+    success_url = reverse_lazy('index')
     success_message = 'Пользователь успешно изменен'
 
     def test_func(self):
