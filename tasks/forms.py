@@ -16,3 +16,7 @@ class TaskForm(forms.ModelForm):
         widgets = {
             'labels': forms.SelectMultiple(attrs={'class': 'form-select'}),
         }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['executor'].required = False
