@@ -10,7 +10,7 @@ from .forms import LabelForm
 from .mixins import CheckCascadeMixin
 from .models import Label
 
-_INDEX_PAGE = "labels:index"
+_INDEX_PAGE = "labels:list"
 
 _UI_ACTIONS = {
     "edit": "Изменить",

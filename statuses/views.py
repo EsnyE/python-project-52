@@ -10,7 +10,7 @@ from .forms import StatusForm
 from .mixins import CheckCascadeMixin
 from .models import Status
 
-_INDEX_PAGE = "statuses:index"
+_INDEX_PAGE = "statuses:list"
 
 # Common UI strings (single source of truth)
 _UI_ACTIONS = {
